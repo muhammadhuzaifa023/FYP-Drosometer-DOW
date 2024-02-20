@@ -1,0 +1,290 @@
+{% extends "base/head.html" %}
+{% block content %}
+
+    <head>
+        <style>
+            body {
+                padding: 0;
+                margin: 0;
+            }
+
+            .font-range {
+                width: 100%;
+                box-sizing: border-box;
+                margin: auto;
+            }
+
+            #range {
+                width: 100%;
+                padding: 10px 0;
+                outline-color: #626ad1;
+                background: #626ad1;
+
+            }
+
+            #range1 {
+                width: 100%;
+                padding: 25px 0;
+                background-color: #626ad1;
+                outline-color: #626ad1;
+                fill: #626ad1;;
+
+            }
+
+            #range2 {
+                width: 100%;
+                padding: 25px 0;
+                background: #626ad1;
+
+            }
+
+            .txt1 {
+                box-sizing: border-box;
+                width: 50%;
+                margin: auto;
+            }
+
+            .txt2 {
+                box-sizing: border-box;
+                width: 50%;
+                margin: auto;
+            }
+
+            button {
+                padding: 10px 20px;
+                background: #ffffff;
+                border: none;
+                box-shadow: 0 0 4px 0 #626ad1;
+                transition: all ease .3s;
+            }
+
+            button a {
+                text-decoration: none;
+                color: rgb(255, 0, 0);
+            }
+
+            button:hover {
+                background: #626ad1;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div id="page-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container">
+                    <div class="horizontal">
+                        <div class="verticals ten offset-by-one">
+
+                            <ol class="breadcrumb breadcrumb-fill2">
+                                <li><a href="/"><i class="fa fa-home"></i></a></li>
+                                <li><a href="/w_dimen">Wing Dimensions</a></li>
+                                <li><a> / </a></li>
+                                <li><a href="/w_dimen2">Input</a></li>
+                                <li><a> / </a></li>
+                                <li class="active">Editor</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <br>
+                <br>
+
+                <h2>{{ img_n }}</h2>
+                <br><br>
+                <div class="col-md-10">
+                    <img src={{ img_p }} alt="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <br>
+                <br>
+                <h2>{{ img_name }}</h2>
+                <br><br>
+                <div class="col-md-10">
+                    <img src={{ img_path }} alt="">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="right-content">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="primary-button">
+                            <br>
+                            <br>
+                            <button type="submit" id="buttonID" name="highlight">{{ but_name }}<span
+                                    class="load loading"></span></button>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="contact" method="post" enctype="multipart/form-data">
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <fieldset>
+                    {% csrf_token %}
+                    <div class="font-range">
+                        <input type="range" name='range1' id="range1" class="form-label" value="{{ val1 }}" min="0"
+                               max="20"/>
+                        <div class="txt1">
+                            <div class="font"></div>
+                        </div>
+                        <input type="range" name='range2' id="range2" value="{{ val2 }}" min="0" max="20"/>
+                        <div class="txt2">
+                            <div class="font"></div>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+
+
+            <div class="content col-md-6">
+                <br>
+                <Br>
+                <div class="content col-md-9">
+                    <p align="justify">Adjust sliders only if venation structure is disjointed or has poor line
+                        connectivity. Use lower
+                        slider values to promote vein structure connectivity and achieve optimal results.</p>
+
+                    <button type="submit" id="form-submit" name="check" style="text-align: right"> Check
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="content col-md-6">
+                <br>
+                <Br>
+                <div class="content col-md-9">
+                    <p align="justify">Image set. Proceed to next step.</p>
+                    <button type="submit" id="form-submit" name="next" style="text-align: right"> Next
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+    <script>
+
+
+        var range = document.getElementById("range1");
+        var font = document.querySelector(".txt1 .font");
+
+        checkFontSize();
+
+        range.oninput = function () {
+            console.log(this.values);
+            body.style.setProperty("font-size", this.value);
+            window.localStorage.setItem("fontSize", this.value);
+            window.localStorage.setItem("range", this.value);
+
+        };
+
+        function checkFontSize() {
+            var fontSize = window.localStorage.getItem("fontSize");
+            var rangeValue = window.localStorage.getItem("range");
+
+        }
+
+        var range = document.getElementById("range1");
+
+        checkFontSize();
+        range.oninput = function () {
+            console.log(this.values);
+            window.localStorage.setItem("fontSize", this.value);
+            window.localStorage.setItem("range", this.value);
+            font.innerHTML = "<p>Value is :<span style='font-family: Poppins, sans-serif'>" + "<b>" + this.value + "</span></b></p>";
+
+        };
+
+        function checkFontSize() {
+            var fontSize = window.localStorage.getItem("fontSize");
+            var rangeValue = window.localStorage.getItem("range");
+            font.innerHTML = "Value is : " + range.value;
+        }
+
+
+    </script>
+    <script>
+
+
+        var range2 = document.getElementById("range2");
+        var font2 = document.querySelector(".txt2 .font");
+
+        checkFontSize();
+
+        range2.oninput = function () {
+            console.log(this.values);
+            body.style.setProperty("font-size2", this.value);
+            window.localStorage.setItem("fontSize2", this.value);
+            window.localStorage.setItem("range2", this.value);
+
+        };
+
+        function checkFontSize() {
+            var fontSize2 = window.localStorage.getItem("fontSize2");
+            var rangeValue2 = window.localStorage.getItem("range2");
+
+        }
+
+        var range2 = document.getElementById("range2");
+
+        checkFontSize();
+        range2.oninput = function () {
+            console.log(this.values);
+            window.localStorage.setItem("fontSize2", this.value);
+            window.localStorage.setItem("range2", this.value);
+            font2.innerHTML = "<p>Value is :<span style='font-family: Poppins, sans-serif'>" + "<b>" + this.value + "</span></b></p>";
+
+        };
+
+        function checkFontSize() {
+            var fontSize2 = window.localStorage.getItem("fontSize2");
+            var rangeValue2 = window.localStorage.getItem("range2");
+            font2.innerHTML = "Value is : " + range2.value;
+        }
+
+
+    </script>
+
+
+    <script>
+        document.getElementById("uploadBtn").addEventListener("click", function (event) {
+            // prevent the default form submission
+            event.preventDefault();
+
+            // check if a file has been selected
+            var fileInput = document.getElementById("img");
+            if (fileInput.files.length > 0) {
+                // hide the upload button and show the spinner
+                document.getElementById("uploadBtn").style.display = "none";
+                document.getElementById("waitBtn").style.display = "block";
+
+                // submit the form
+                document.getElementById("contact upload-form").submit();
+            } else {
+                // if no file selected, alert the user
+                alert("Please select an image.");
+            }
+        });
+
+    </script>
+    </body>
+
+
+{% endblock %}
